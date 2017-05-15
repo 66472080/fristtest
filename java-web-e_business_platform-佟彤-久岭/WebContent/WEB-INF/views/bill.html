@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(
+		function() {
+			$.ajax({
+				url : "../findbills",
+				type : "post",
+				data: JSON.stringify(1),
+				contentType:"application/json;charset=utf-8",
+				datatype : "json",
+				success : function(result) {
+					var table_0="<tr><td>序号</td>&nbsp;&nbsp;<td>订单号</td>&nbsp;&nbsp;<td>生成时间</td>&nbsp;&nbsp;<td>金额(元)</td></tr>";
+					 for(var i = 1; i <= result.o1.length; i++){
+						 table_0+="<tr><td>"+result.o1[i-1].oid+"</td>"+
+							"<td>"+result.o1[i-1].xuhao+"</td>"+
+							"<td>"+result.o1[i-1].commitTime+"</td>"+
+							"<td>"+result.o1[i-1].amount+"</td>"+
+							"<td style='display: none'>"+result.o1[i-1].oid+"</td>"+
+							"<td><input type='type' class='i3' value="+result.o1[i-1].amount+"  style ='display: none'></td>"+
+							"<td><input type='type' class='i2' value="+result.o1[i-1].uid+"  style='display: none'></td>"+
+							"<td><input type='type' class='i4' value="+result.o1[i-1].oid+"  style='display: none'></td>"+
+							"<td><input type='button' class='i1' value='详情'></td></tr>"
+					 }
+					 $("#t1").html(table_0);
+						$(".i1").click(xiangqing);
+                    var table_1 = "<span>共"+result.pages.totalNumber+"条,当前"+result.pages.currentPage+"页/共"+result.pages.totalPage+"页</span>";
+                    table_1 +="<a href='javascript:finsUsersQuery(1);'>首页</a>";
+                    table_1 +="<a href='javascript:finsUsersQuery("+(result.pages.currentPage-1)+")'>上一页</a>";
+                    if((result.pages.currentPage+1)>result.pages.totalPage){
+                    	table_1 +="<a href='#'>下一页</a>";
+                    }else{
+                    table_1 +="<a href='javascript:finsUsersQuery("+(result.pages.currentPage+1)+")'>下一页</a>";
+                    }
+                    table_1 +="<a href='javascript:finsUsersQuery("+(result.pages.totalPage)+")'>尾页</a>";
+                    
+                    $("#t3").html(table_1);
+				},
+				
+			});
+		})
+		
+		function finsUsersQuery(currentPage){
+			if(currentPage<0){
+				currentPage = 1;
+			}
+			$.ajax({
+				url : "../findbills",
+				type : "post",
+				data: JSON.stringify(currentPage),
+				contentType:"application/json;charset=utf-8",
+				datatype : "json",
+				success : function(result) {
+					var table_2="<tr><td>序号</td>&nbsp;&nbsp;<td>订单号</td>&nbsp;&nbsp;<td>生成时间</td>&nbsp;&nbsp;<td>金额(元)</td></tr>";
+					 for(var i = 1; i <= result.o1.length; i++){
+						 table_2+="<tr><td>"+result.o1[i-1].oid+"</td>"+
+							"<td>"+result.o1[i-1].xuhao+"</td>"+
+							"<td>"+result.o1[i-1].commitTime+"</td>"+
+							"<td>"+result.o1[i-1].amount+"</td>"+
+							"<td style='display: none'>"+result.o1[i-1].oid+"</td>"+
+							"<td><input type='type' class='i3' value="+result.o1[i-1].amount+"  style ='display: none'></td>"+
+							"<td><input type='type' class='i2' value="+result.o1[i-1].uid+"  style='display: none'></td>"+
+							"<td><input type='type' class='i4' value="+result.o1[i-1].oid+"  style='display: none'></td>"+
+							"<td><input type='button' class='i1' value='详情'></td></tr>"
+					 }
+					 $("#t1").html(table_2);
+						$(".i1").click(xiangqing);
+                   var table_3 = "<span>共"+result.pages.totalNumber+"条,当前"+result.pages.currentPage+"页/共"+result.pages.totalPage+"页</span>";
+                   table_3 +="<a href='javascript:finsUsersQuery(1);'>首页</a>";
+                   table_3 +="<a href='javascript:finsUsersQuery("+(result.pages.currentPage-1)+");'>上一页</a>";
+                   if((result.pages.currentPage+1)>result.pages.totalPage){
+                	   table_3 +="<a href='#'>下一页</a>";
+                   }else{
+                	   table_3 +="<a href='javascript:finsUsersQuery("+(result.pages.currentPage+1)+")'>下一页</a>";
+                   }
+                   table_3 +="<a href='javascript:finsUsersQuery("+(result.pages.totalPage)+")'>尾页</a>";
+                   
+                   $("#t3").html(table_3);
+				},
+				error : function(status) {
+					alert("错误");
+				}
+			});
+		}
+		
+/* ---------------------------------------- */
+/* $(document).ready(function() {
+	$.ajax({
+		url:"findbill",
+		type:"post",
+		data:"json",
+		success:
+			function (result) {
+			var table="<tr><td>序号</td>&nbsp;&nbsp;<td>订单号</td>&nbsp;&nbsp;<td>生成时间</td>&nbsp;&nbsp;<td>金额(元)</td></tr>";
+				for(var i = 1; i<= result.length;i++){
+					table+="<tr><td>"+result[i-1].uid+"</td>"+
+					"<td>"+result[i-1].xuhao+"</td>"+
+					"<td>"+result[i-1].commitTime+"</td>"+
+					"<td>"+result[i-1].amount+"</td>"+
+					"<td style='display: none'>"+result[i-1].oid+"</td>"+
+					"<td><input type='type' class='i3' value="+result[i-1].amount+"  style ='display: none'></td>"+
+					"<td><input type='type' class='i2' value="+result[i-1].uid+"  style='display: none'></td>"+
+					"<td><input type='type' class='i4' value="+result[i-1].oid+"  style='display: none'></td>"+
+					"<td><input type='button' class='i1' value='详情'></td></tr>"
+				}
+				$("#t1").html(table);
+				$(".i1").click(xiangqing);
+			}
+	});
+})*/
+
+function xiangqing() {
+	var order={};
+	order.uid = $(this).parent().parent().find(".i2").val();
+	var m = $(this).parent().parent().find(".i3").val();
+	order.oid = $(this).parent().parent().find(".i4").val();
+	var table_4 = "<tr><td>序号</td>&nbsp;&nbsp;<td>描述</td>&nbsp;&nbsp;<td>单价</td>&nbsp;&nbsp;<td>购票张数</td>&nbsp;&nbsp;<td>金额(元)</td></tr>";
+	$.ajax({
+		url:"findOrder",
+		type:"post",
+		data:JSON.stringify(order),
+		contentType:"application/json;charset=utf-8",
+		datatype:"json",
+		success:
+			function (result) {
+				table_4 += "<tr><td>"+result.oid+"</td>"+
+				"<td>"+result.dese+"</td>"+
+				"<td>"+result.price+"</td>"+
+				"<td>"+parseInt(m/result.price)+"</td>"+
+				"<td>"+m+"</td></tr>"
+				$("#t4").html(table_4);	
+			}
+	});
+}
+ 
+</script>
+<style>
+        *{margin: 0;padding: 0;list-style: none;}
+        .wrap div {margin: 0 auto;}
+        .wrap div:nth-of-type(1){
+            margin-top: 30px;
+            width:800px;
+            height: 100px;
+         /*   border-bottom: 1px solid black; */
+        }
+        .wrap div:nth-of-type(1) ul {width: 798px;height: 100px;}
+        .wrap div:nth-of-type(2) {width:800px;
+            height: 300px;}
+        .wrap div:nth-of-type(2) ul {margin-top: 50px;float: left;}
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) {
+            width: 249px;/* border-right: 1px solid black; */
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) li {
+            width: 198px;height: 600px;
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(2) {
+            width: 498px;height: 600px;margin-left: 50px;
+        }
+         td{
+        		
+        text-align:center ;border:1px solid black;
+        }
+    </style>
+</head>
+<body style = "background-image: url('../resources/images/img3.png');background-position:75% 20%;background-repeat: no-repeat;">
+<div class="wrap">
+        <div>
+            <ul><h1>汽车销售平台购车系统</h1></ul>
+        </div>
+        <div>
+            <ul>
+                <li><h2>
+                <a href="http://localhost:8080/java-web-e_business_platform/views/index.html">首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/rb.html">实时购车</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/bill.html">我的订单</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/userMessage.html">会员信息</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/chongzhi.html">账户充值</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/saveUser2">退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出</a><br>
+                </li></h2>
+            </ul>
+            <ul><li>
+           		<table id="t1" style="text-align:center ;border:1px solid black; border-collapse:collapse"></table>
+           		<table id="t2" style="text-align:center ;border:1px solid black; border-collapse:collapse"></table>
+           		<table id="t3" style="text-align:center ;border:1px solid black; border-collapse:collapse"></table>
+           		<table id="t4" style="text-align:center ;border:1px solid black; border-collapse:collapse"></table>
+            </li></ul>
+        </div>
+    </div>
+</body>
+</html>

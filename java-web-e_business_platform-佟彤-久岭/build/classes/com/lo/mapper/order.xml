@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.lo.dao.UserDao">
+	<resultMap type="com.lo.entity.Order" id="OrderresultMap" >
+		<id column="oid" jdbcType="INTEGER" property="oid"/>
+		<result column="commitTime" jdbcType="TIMESTAMP" property="commitTime"/>
+		<result column="amount" jdbcType="DOUBLE" property="amount"/>
+		<result column="dese" jdbcType="VARCHAR" property="dese"/>
+		<result column="lid" jdbcType="INTEGER" property="lid"/>
+		<result column="xuhao" jdbcType="INTEGER" property="xuhao"/>
+		<result column="uid" jdbcType="INTEGER" property="uid"/>
+		<result column="price" jdbcType="DOUBLE" property="price"/>
+	</resultMap>
+
+	
+	<insert id="saveOrder" parameterType="com.lo.entity.Order" >
+		insert into Orders(commitTime,amount,dese,xuhao,uid,price,lid)values
+			(#{commitTime},#{amount},#{dese},#{xuhao},#{uid},#{price},#{lid})
+	</insert>
+	<select id="findbill" parameterType="com.lo.entity.Order" resultMap="OrderresultMap">
+		select * from Orders
+	</select>
+	<select id="findOrders" parameterType="com.lo.entity.Order" resultMap="OrderresultMap">
+		select * from Orders where oid=#{oid}
+	</select>
+	<select id="findOrdersbills" parameterType="java.util.Map" resultMap="OrderresultMap">
+		select * from Orders where uid = #{user.uid} limit #{page.dbIndex},#{page.dbNumber}
+	</select>
+	<select id="findbillsCount" resultType="int">
+  	select count(oid) from Orders where uid=#{a}
+ 	</select>
+	
+</mapper>

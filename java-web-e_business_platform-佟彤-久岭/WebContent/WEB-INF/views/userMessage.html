@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wrap div {
+	margin: 0 auto;
+}
+
+.wrap div:nth-of-type(1) {
+	margin-top: 30px;
+	width: 800px;
+	height: 100px;
+/* 	border-bottom: 1px solid black;
+ */}
+
+.wrap div:nth-of-type(1) ul {
+	width: 798px;
+	height: 100px;
+}
+
+.wrap div:nth-of-type(2) {
+	width: 800px;
+	height: 300px;
+}
+
+.wrap div:nth-of-type(2) ul {
+	margin-top: 50px;
+	float: left;
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(1) {
+	width: 249px;
+/* 	border-right: 1px solid black;
+ */}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(1) li {
+	width: 198px;
+	height: 600px;
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(2) {
+	width: 498px;
+	height: 600px;
+	margin-left: 50px;
+}
+</style>
+<script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$.ajax({
+			url:"findUser2",
+			type:"post",
+			datatype:"json",
+			success:
+				function(result) {		
+				if(result.gender == "男"){
+				var table = "<tr><td id='username' name='用户名' >用户名: "+result.userName+"</td>"+
+					"<td id='balance' name='balance'>余额: "+result.balance+"</td>"+
+				"</tr>"+
+				"<tr>"+
+				
+					"<td>密码<input type='text' name='userPwd' id='userPwd' value="+result.userPwd+"></td>"+
+					
+				"</tr>"+
+				"<tr>"+
+					"<td>密码确认<input type='text' name='userPwd2' id='userPwd2' value="+result.userPwd+"></td>"+					
+				"</tr>"+
+				"<tr>"+
+					"<td>真实姓名<input type='text' name='name' id='name'  value="+result.name+"></td>"+
+				"</tr>"+
+				"<tr>"+
+				
+					"<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;男<input type='radio' name='gender' id='gender' checked='checked' value='男'>"+
+			
+					" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 女<input type='radio' name='gender' id='gender' value='女'></td>"+
+				
+				"</tr>"+
+				"<tr>"+
+					"<td>身份证号<input type='text' name='idCard' id='idCard'  value="+result.idCard+"></td>"+
+					
+				"</tr>"+
+				"<tr>"+
+					"<td>年龄<input type='text' name='age' id='age'  value="+result.age+"></td>"+
+				"</tr>"+
+				"<tr>"+
+					"<td>地址<input type='text' name='address' id='address'  value="+result.address+"></td>"+
+					
+				"</tr>"+
+				"<tr>"+
+					"<td>电话号码<input type='text' name='telon' id='telon'  value="+result.telon+"></td>"+
+				"</tr>"
+				}else{
+					var table = "<tr><td id='username' name='用户名' >用户名: "+result.userName+"</td>"+
+					"<td id='balance' name='balance'>余额: "+result.balance+"</td>"+
+					"</tr>"+
+					"<tr>"+
+					"<td>密码<input type='text' name='userPwd' id='userPwd' value="+result.userPwd+"></td>"+
+					
+				"</tr>"+
+				"<tr>"+
+					"<td>密码确认<input type='text' name='userPwd2' id='userPwd2' value="+result.userPwd+"></td>"+					
+				"</tr>"+
+				"<tr>"+
+					"<td>真实姓名<input type='text' name='name' id='name'  value="+result.name+"></td>"+
+				"</tr>"+
+				"<tr>"+
+				
+				"<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;男<input type='radio' name='gender' id='gender' value='男'>"+
+				
+				" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 女<input type='radio' name='gender' id='gender' checked='checked' value='女'></td>"+
+				
+				"</tr>"+
+				"<tr>"+
+					"<td>身份证号<input type='text' name='idCard' id='idCard'  value="+result.idCard+"></td>"+
+					
+				"</tr>"+
+				"<tr>"+
+					"<td>年龄<input type='text' name='age' id='age'  value="+result.age+"></td>"+
+				"</tr>"+
+				"<tr>"+
+					"<td>地址<input type='text' name='address' id='address'  value="+result.address+"></td>"+
+					
+				"</tr>"+
+				"<tr>"+
+					"<td>电话号码<input type='text' name='telon' id='telon'  value="+result.telon+"></td>"+
+				"</tr>"
+				
+				}
+		
+					$("#t1").html(table)		
+				}
+		
+		});
+		
+	})
+	
+</script>
+</head>
+<body style = "background-image: url('../resources/images/img3.png');background-position:75% 20%;background-repeat: no-repeat;">
+<div class="wrap">
+		<div>
+			<ul>
+				<h1>汽车销售平台购车系统</h1>
+			</ul>
+		</div>
+		<div>
+			<ul>
+				<li><h2>
+						<a href="http://localhost:8080/java-web-e_business_platform/views/index.html">首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/rb.html">实时购车</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/bill.html">我的订单</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/userMessage.html">会员信息</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/chongzhi.html">账户充值</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/saveUser2">退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出</a><br>
+               <br>
+						<br></li>
+				</h2>
+			</ul>
+			<ul>
+				<form action="updateUser" method="post">
+	<table id="t1">
+	</table>
+	<input type="submit" value="修改">
+	<input type="reset" value="重置">
+	</form>
+			</ul>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.lo.dao.UserDao">
+ 	<resultMap type="com.lo.entity.AdminTicket" id="AdminTicketResourceMap">
+		<result column = "tid" jdbcType="INTEGER" property="tid"/>
+		<result column = "dese" jdbcType="VARCHAR" property="dese" />
+		<result column = "startTime" jdbcType = "TIMESTAMP" property = "startTime"/>
+		<result column = "amount" jdbcType="INTEGER" property="amount"/>
+		<result column = "balance" jdbcType="INTEGER" property="balance"/>
+		<result column = "price" jdbcType="DOUBLE" property="price"/>
+		<result column = "status" jdbcType="INTEGER" property="status"/>
+	</resultMap>
+ 	<select id="findTicket" parameterType="com.lo.entity.AdminTicket" resultMap="AdminTicketResourceMap">
+ 		select * from ticket
+ 	</select>
+ 	<select id="findTicket2" parameterType="com.lo.entity.AdminTicket" resultMap="AdminTicketResourceMap">
+ 		select * from ticket where startTime BETWEEN #{startTime} AND DATE_SUB(#{startTime},INTERVAL -7 DAY)
+ 	</select>
+ 	<select id="findTicket3" parameterType="com.lo.entity.AdminTicket" resultMap="AdminTicketResourceMap">
+ 		select * from ticket where tid=#{tid}
+ 	</select>
+ 	<update id="updateat" parameterType="com.lo.entity.AdminTicket">
+ 		update ticket set balance=#{balance} where tid=#{tid};
+ 	</update>
+ 	<select id="findTicket4" resultType="int" >
+ 		select count(tid) from ticket 
+ 	</select>
+ 	<select id="findTicket8" parameterType="com.lo.entity.Pages" resultMap="AdminTicketResourceMap">
+ 		select * from ticket limit #{dbIndex},#{dbNumber}
+ 	</select>
+ </mapper>

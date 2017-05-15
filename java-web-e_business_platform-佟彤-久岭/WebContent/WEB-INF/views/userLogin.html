@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+<script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+	function admin_login(){
+		window.location.href = "http://localhost:8080/java-web-e_business_platform/begin";
+	}
+
+</script>
+<style type="text/css">
+	a{
+		border-bottom: 
+	
+	}
+</style>
+</head>
+<body style = "background-color:rgb(25,100,191)">
+
+ <div style = "width:auto; height:auto; background-image: url('../resources/images/userLogin.png');position: absolute;top:25%;left:30%;"> 
+<div class="container">
+	<div class="form-group">
+	<form class="form-group" action="../loginUser" method="post" style = "position: absolute;top:38%;left:19%;font-size: 22px;">
+					账号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-control" type="text" id="userName" name="userName" style = "font-size:27px;color:write ;width:230px;height:28px; border:none;background-color: transparent"><br><br>
+					<br>密码:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-control"
+						type="text" id="userPwd" name="userPwd" style = "font-size:27px;color:write ;width:230px;height:28px; border:none;background-color: transparent"> <br><br><input
+						type="submit" value="登录">
+				</form >
+				<form method="post" style = "position: absolute;top:67%;left:40%;font-size: 22px">
+					<a href="gosaveUser">注册</a>
+				</form>
+				</div>
+				</div>
+				
+				
+				<div style = "position: absolute;top:2.5%;left:50%;color:white ;">
+</div><div style = "position: absolute;top:18.7%;left:72%;">
+<input type = "button" style = "background-color: transparent ; border:none" onclick = "admin_login()" value = "点击切换"/></div>
+</div>
+
+
+<script type="text/javascript" src="../resources/js/bootstrap.min.js"></script>
+</body>
+</html>

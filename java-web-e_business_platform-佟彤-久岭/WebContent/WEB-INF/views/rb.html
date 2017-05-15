@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+ function findTicketDate() {
+	var adminTicket={};
+	adminTicket.startTime=$("#date").val();
+	$(this).parent().parent().find(".gp").val();
+	$(this).parent().parent().find(".atid").val();
+	$.ajax({
+		url:"findTicketDate",
+		type:"post",
+		data:JSON.stringify(adminTicket),
+		contentType:"application/json;charset=utf-8",
+		datatype:"json",
+		success:
+			function(result) {
+			var table="<tr><td>序号</td>&nbsp;&nbsp;<td>车辆型号</td>&nbsp;&nbsp;<td>到货时间</td>&nbsp;&nbsp;<td>总量数</td>"+
+			"&nbsp;&nbsp;<td>剩余量数</td>&nbsp;&nbsp;<td>单价(元)</td>&nbsp;&nbsp;<td>状态</td>&nbsp;&nbsp;<td>购车数</td></tr>";
+		
+			for(var i = 1; i <= result.length;i++){
+				if(result[i-1].status == 1 && result[i-1].balance != 1){
+				table += 
+					"<tr><td id='AdminTickettid'>"+result[i-1].tid+"</td>"+
+					"<td>"+result[i-1].dese+"</td>"+
+					"<td>"+result[i-1].startTime+"</td>"+
+					"<td>"+result[i-1].amount+"</td>"+
+					"<td>"+result[i-1].balance+"</td>"+
+					"<td>"+result[i-1].price+"</td>"+
+					"<td>"+"销售中"+"</td>"+
+					"<td><input type='text' class='gp' name='gp' style = 'width:25px;'></td>"+
+					"<td><input type='number' class='atid' name='atid' style='display: none' value="+result[i-1].tid+"></td>"+	
+					"<td><input class='addsc' type='button' value='加入购物车'></td></tr>"
+				
+					}
+				
+				
+				if(result[i-1].status == 0 || result[i-1].balance == 1){
+					table += 
+						"<tr><td>"+result[i-1].tid+"</td>"+
+						"<td>"+result[i-1].dese+"</td>"+
+						"<td>"+result[i-1].startTime+"</td>"+
+						"<td>"+result[i-1].amount+"</td>"+
+						"<td>"+result[i-1].balance+"</td>"+
+						"<td>"+result[i-1].price+"</td>"+
+						"<td>"+"暂停销售"+"</td></tr>";
+					
+							}
+				if(result[i-1].status == 2){
+					table += 
+						"<tr><td>"+result[i-1].tid+"</td>"+
+						"<td>"+result[i-1].dese+"</td>"+
+						"<td>"+result[i-1].startTime+"</td>"+
+						"<td>"+result[i-1].amount+"</td>"+
+						"<td>"+result[i-1].balance+"</td>"+
+						"<td>"+result[i-1].price+"</td>"+
+						"<td>"+"没车了"+"</td></tr>";
+				
+					
+					}
+											
+				}
+			
+			$("#t1").html(table);
+			//添加点击事件  通过这种方式添加方法可以吧函数添加给标签
+			$(".addsc").click(saveShopCar);
+			}
+		
+		
+	});
+} 
+function saveShopCar() {
+	
+	/* 1. dom -> jq  */
+	/* $(this) */
+	/* 2.  获取父级 */
+	/* $(this).parent(); */
+	/* 3. 获取某一个子级 */
+	/* $(this).parent().find("xxx"); */
+	
+	$(this).parent().parent().find(".gp");
+	
+	
+	var ticketModel={};
+	ticketModel.tid=$(this).parent().parent().find(".atid").val();
+	ticketModel.buyCount=$(this).parent().parent().find(".gp").val();
+	$.ajax({
+		url:"../saveShopCar",
+		type:"post",
+		data:JSON.stringify(ticketModel),
+		contentType:"application/json;charset=utf-8",
+		datatype:"json",
+		success:
+			function (result) {
+			
+				window.location.href="http://localhost:8080/java-web-e_business_platform/views/rb.html";
+			}
+		
+	}); 
+}
+	
+	$(document).ready(function(){
+		
+		$.ajax({
+			url:"findTicket",
+			type:"post",
+			data:JSON.stringify(1),
+			contentType:"application/json;charset=utf-8",
+			datatype:"json",
+			success:
+				function(result) {
+				var table="<tr><td>序号</td>&nbsp;&nbsp;<td>车辆型号</td>&nbsp;&nbsp;<td>时间</td>&nbsp;&nbsp;<td>总辆数</td>"+
+					"&nbsp;&nbsp;<td>可卖量数</td>&nbsp;&nbsp;<td>单价(元)</td>&nbsp;&nbsp;<td>状态</td>&nbsp;&nbsp;<td>购车数</td></tr>";
+				
+					
+					for(var i = 1; i <= result.la.length;i++){
+						
+						if(result.la[i-1].status == 1 && result.la[i-1].balance != 1){
+						table += 
+							"<tr><td class='AdminTickettid'>"+result.la[i-1].tid+"</td>"+
+							"<td>"+result.la[i-1].dese+"</td>"+
+							"<td>"+result.la[i-1].startTime+"</td>"+
+							"<td>"+result.la[i-1].amount+"</td>"+
+							"<td>"+result.la[i-1].balance+"</td>"+
+							"<td>"+result.la[i-1].price+"</td>"+
+							"<td>"+"销售中"+"</td>"+
+							"<td><input type='text' class='gp' name='gp' style = 'width:25px;'></td>"+
+							"<td><input type='number' class='atid' name='atid' style='display: none' value="+result.la[i-1].tid+"></td>"+	
+							"<td><input class='addsc_1' type='button' value='加入购物车'></td></tr>"
+							
+						}
+						
+						else if(result.la[i-1].status == 0 || result.la[i-1].balance == 1){
+						
+							table += 
+								"<tr><td>"+result.la[i-1].tid+"</td>"+
+								"<td>"+result.la[i-1].dese+"</td>"+
+								"<td>"+result.la[i-1].startTime+"</td>"+
+								"<td>"+result.la[i-1].amount+"</td>"+
+								"<td>"+result.la[i-1].balance+"</td>"+
+								"<td>"+result.la[i-1].price+"</td>"+
+								"<td>"+"暂停销售"+"</td></tr>";
+						}
+						else if(result.la[i-1].status == 2){
+						
+							table += 
+								"<tr><td>"+result.la[i-1].tid+"</td>"+
+								"<td>"+result.la[i-1].dese+"</td>"+
+								"<td>"+result.la[i-1].startTime+"</td>"+
+								"<td>"+result.la[i-1].amount+"</td>"+
+								"<td>"+result.la[i-1].balance+"</td>"+
+								"<td>"+result.la[i-1].price+"</td>"+
+								"<td>"+"没车了"+"</td></tr>";
+							}
+						
+													
+						}
+					table += "<tr><td><span>共"+result.pages.totalNumber+"条,当前"+result.pages.currentPage+"页/共"+result.pages.totalPage+"页</span></td>";
+					table +="<td><a href='javascript:finsUsersQuery(1);'>首页</a></td>";
+					table +="<td><a href='javascript:finsUsersQuery("+(result.pages.currentPage-1)+")'>上一页</a></td>";
+                    if((result.pages.currentPage+1)>result.pages.totalPage){
+                    	table +="<td><a href='#'>下一页</a></td>";
+                    }else{
+                    	table +="<td><a href='javascript:finsUsersQuery("+(result.pages.currentPage+1)+")'>下一页</a></td>";
+                    }
+                    table +="<td><a href='javascript:finsUsersQuery("+(result.pages.totalPage)+")'>尾页</a></td></tr>";
+                    
+                    /* $("#t2").html(table_1); */
+					$("#t1").html(table);
+					$(".addsc").click(saveShopCar);
+					
+					//添加点击事件  通过这种方式添加方法可以吧函数添加给标签
+					$(".addsc_1").click(saveShopCar);
+					
+				}
+			});
+		})
+		
+		function finsUsersQuery(currentPage){
+			if(currentPage<0){
+				currentPage = 1;
+			}
+			$.ajax({
+				url : "findTicket",
+				type : "post",
+				data: JSON.stringify(currentPage),
+				contentType:"application/json;charset=utf-8",
+				datatype : "json",
+				success : function(result) {
+				var table_0="<tr><td>序号</td>&nbsp;&nbsp;<td>车辆型号</td>&nbsp;&nbsp;<td>时间</td>&nbsp;&nbsp;<td>总辆数</td>"+
+					"&nbsp;&nbsp;<td>可卖量数</td>&nbsp;&nbsp;<td>单价(元)</td>&nbsp;&nbsp;<td>状态</td>&nbsp;&nbsp;<td>购车数</td></tr>";
+				
+					
+					for(var i = 1; i <= result.la.length;i++){
+						
+						if(result.la[i-1].status == 1 && result.la[i-1].balance != 1){
+							table_0 += 
+							"<tr><td class='AdminTickettid'>"+result.la[i-1].tid+"</td>"+
+							"<td>"+result.la[i-1].dese+"</td>"+
+							"<td>"+result.la[i-1].startTime+"</td>"+
+							"<td>"+result.la[i-1].amount+"</td>"+
+							"<td>"+result.la[i-1].balance+"</td>"+
+							"<td>"+result.la[i-1].price+"</td>"+
+							"<td>"+"销售中"+"</td>"+
+							"<td><input type='text' class='gp' name='gp' style = 'width:25px;'></td>"+
+							"<td><input type='number' class='atid' name='atid' style='display: none' value="+result.la[i-1].tid+"></td>"+	
+							"<td><input class='addsc_2' type='button' value='加入购物车'></td></tr>"
+							
+						}
+						
+						else if(result.la[i-1].status == 0 || result.la[i-1].balance == 1){
+						
+							table_0 += 
+								"<tr><td>"+result.la[i-1].tid+"</td>"+
+								"<td>"+result.la[i-1].dese+"</td>"+
+								"<td>"+result.la[i-1].startTime+"</td>"+
+								"<td>"+result.la[i-1].amount+"</td>"+
+								"<td>"+result.la[i-1].balance+"</td>"+
+								"<td>"+result.la[i-1].price+"</td>"+
+								"<td>"+"暂停销售"+"</td></tr>";
+						}
+						else if(result.la[i-1].status == 2){
+						
+							table_0 += 
+								"<tr><td>"+result.la[i-1].tid+"</td>"+
+								"<td>"+result.la[i-1].dese+"</td>"+
+								"<td>"+result.la[i-1].startTime+"</td>"+
+								"<td>"+result.la[i-1].amount+"</td>"+
+								"<td>"+result.la[i-1].balance+"</td>"+
+								"<td>"+result.la[i-1].price+"</td>"+
+								"<td>"+"没车了"+"</td></tr>";
+							}
+						
+													
+						}
+					table_0 += "<tr><td><span>共"+result.pages.totalNumber+"条,当前"+result.pages.currentPage+"页/共"+result.pages.totalPage+"页</span></td>";
+					table_0 +="<td><a href='javascript:finsUsersQuery(1);'>首页</a></td>";
+					table_0 +="<td><a href='javascript:finsUsersQuery("+(result.pages.currentPage-1)+")'>上一页</a></td>";
+                    if((result.pages.currentPage+1)>result.pages.totalPage){
+                    	table_0 +="<td><a href='#'>下一页</a></td>";
+                    }else{
+                    	table_0 +="<td><a href='javascript:finsUsersQuery("+(result.pages.currentPage+1)+")'>下一页</a></td>";
+                    }
+                    table_0 +="<td><a href='javascript:finsUsersQuery("+(result.pages.totalPage)+")'>尾页</a></td></tr>";
+                   
+       				$("#t1").html(table_0);
+                   /* $("#t2").html(table_3); */
+                   $(".addsc_2").click(saveShopCar);
+				},
+				error : function(status) {
+					alert("错误");
+				}
+			});
+		}
+</script>
+<style>
+        *{margin: 0;padding: 0;list-style: none;}
+        .wrap div {margin: 0 auto;}
+        .wrap div:nth-of-type(1){
+            margin-top: 30px;
+            width:800px;
+            height: 100px;
+/*            border-bottom: 1px solid black;
+ */        }
+        
+        td{ text-align:center ;border:1px solid black; }
+        .wrap div:nth-of-type(1) ul {width: 798px;height: 100px;}
+        .wrap div:nth-of-type(2) {width:800px;
+            height: 300px;}
+        .wrap div:nth-of-type(2) ul {margin-top: 50px;float: left;}
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) {
+            width: 149px;/* border-right: 1px solid black; */
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) li {
+            width: 98px;height: 600px;
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(2) {
+            width: 598px;height: 600px;margin-left: 50px;
+        }
+        tr {
+        		height: 60px;
+        }
+    </style>
+
+
+
+    
+</head>
+<body style = "background-image: url('../resources/images/img3.png');background-position:75% 20%;background-repeat: no-repeat;">
+
+<div class="wrap">
+        <div>
+            <ul><h1>汽车销售平台购车系统</h1></ul>
+        </div>
+        <div>
+            <ul>
+                <li><h2>
+                <a href="http://localhost:8080/java-web-e_business_platform/views/index.html">首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/rb.html">实时购车</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/bill.html">我的订单</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/userMessage.html">会员信息</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/chongzhi.html">账户充值</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/saveUser2">退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出</a><br>
+               </li></h2>
+            </ul>
+            
+            <ul>
+            <li>
+            <form >
+            请选择起始日期（查询7天以内车辆信息）：
+            <input type='date' id='date'><input type="button" value='查询' onclick="findTicketDate();">
+            </form>
+           <table id="t1" style="text-align:center ;border:1px solid black; border-collapse:collapse">
+           <table id="t2" ></table>
+           </table>
+             
+             
+				<form action="../lookSC" method="post">
+					<input type="submit" value="查看购物车" >
+				</form>
+            </li></ul>
+        </div>
+    </div>
+
+</body>
+</html>

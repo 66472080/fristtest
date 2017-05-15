@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script src="../resources/js/adminTicketMng.js"></script>
+<script type="text/javascript" src="../resources/js/koala.min.1.5.js"></script>
+<script src="../resources/js/adminSeeTicket.js"></script>
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css">
+     <style>
+        *{margin: 0;padding: 0;list-style: none;}
+        .wrap div {margin: 0 auto;}
+        .wrap div:nth-of-type(1){
+            margin-top: 30px;
+            width:950px;
+            height: 100px;
+           /*  border-bottom: 1px solid black; */
+        }
+        .wrap div:nth-of-type(1) ul {width: 850px;height: 200px;}
+        .wrap div:nth-of-type(2) {width:1200px;
+            height: 300px;}
+        .wrap div:nth-of-type(2) ul {margin-top: 50px;float: left;}
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) {
+            width: 150px;/* border-right: 1px solid black; */
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) li {
+            width: 150px;height: 600px;
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(2) {
+            width: 900px;height: 700px;margin-left: 50px;
+        }
+    </style>
+
+<script type="text/javascript">
+	Qfast.add('widgets', {
+		path : "../resources/js/terminator2.2.min.js",
+		type : "js",
+		requires : [ 'fx' ]
+	});
+	Qfast(false, 'widgets', function() {
+		K.tabs({
+			id : 'decoroll2',//焦点图包裹id  
+			conId : "decoimg_a2",//大图域包裹id  
+			tabId : "deconum2",//小圆点数字提示id
+			tabTn : "a",
+			conCn : '.decoimg_b2',//大图域配置class       
+			auto : 1,//自动播放 1或0
+			effect : 'fade',//效果配置
+			eType : 'mouseover',// 鼠标事件
+			pageBt : true,//是否有按钮切换页码
+			bns : [ '.prev', '.next' ],//前后按钮配置class                          
+			interval : 1500
+		// 停顿时间  
+		})
+	})
+</script>
+</head>
+<body style = "background-image: url('../resources/images/img3.png');background-color:rbg(248,255,254);background-position:40% 20%;background-repeat: no-repeat;">
+    <div class="wrap" >
+        <div>
+            <ul><h1>汽车销售平台管理系统</h1></ul>
+        </div>
+        <div>
+            <ul>
+                <li><h2>
+                <a href = "adminIndex.html">首&nbsp;&nbsp;页</a><br><br><br>
+                <a href = "adminTicketMng.html">车辆管理</a><br><br><br>
+                <a href = "adminUserMng.html">用户管理</a><br><br><br>
+                <a href = "adminOrderMng.html">订单管理</a><br><br><br>
+                <a href = "../adminExit">退&nbsp;&nbsp;出</a><br><br><br>
+                </h2></li>
+            </ul>
+            
+            <ul><li>
+            <div  style = "width: 900px;height: 800px">
+            <div id="decoroll2" class="imgfocus">
+
+			<div id="decoimg_a2" class="imgbox">
+				<div class="decoimg_b2"><img src="../resources/images/1.png"></div>
+				<div class="decoimg_b2"><img src="../resources/images/2.png"></div>
+				<div class="decoimg_b2"><img src="../resources/images/3.png"></div>
+				<div class="decoimg_b2"><img src="../resources/images/4.png"></div>
+			</div>
+	
+			<ul id="deconum2" class="num_a2" style = "display:none">
+				<li><a href="javascript:void(0)" hidefocus="true" target="_self">1</a></li>
+				<li><a href="javascript:void(0)" hidefocus="true" target="_self">2</a></li>
+				<li><a href="javascript:void(0)" hidefocus="true" target="_self">3</a></li>
+				<li><a href="javascript:void(0)" hidefocus="true" target="_self">4</a></li>
+			</ul>
+	
+</div></div>
+
+            </li>
+            </ul>
+        </div>
+    </div>
+
+	
+
+
+
+	
+	
+	
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+	function wego(){
+		var user={};
+		if( $("#userName").val().length != 0){
+		 user.userName = $("#userName").val();
+		}
+		 if( $("#idCard").val().length != 0){
+		 user.idCard = $("#idCard").val();
+		 }
+		 if( $("#telon").val().length != 0){
+		 user.telon = $("#telon").val();
+		 }
+	$.ajax({		
+		url:"../views/findUser3",
+		type:"post",
+		data:JSON.stringify(user),
+		datatype:"json",
+		contentType:"application/json;charset=utf-8",
+		success:
+			function (result) {
+			if(result == "geshi"){
+				$("#t1").html("<span style = 'color:red;'>账户格式不对</span>");
+			}else if(result == "userNameyou"){
+				$("#t1").html("<span style = 'color:red;'>账户已被占用</span>");
+			}else if(result == "userTelonyou"){
+				$("#t6").html("<span style = 'color:red;'>电话号码必须是11位</span>");
+			}else if(result == "ok"){
+				$("#t6").html("<span style = 'color:green;'>电话号码正确</span>");
+			}else if(result=="meiyou"){
+				$("#t1").html("<span style = 'color:green;'>账户可以使用</span>");
+			}
+			}
+		});
+	}
+</script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+td {
+	text-align: center;
+	border: 1px solid black;
+}
+
+.wrap div {
+	margin: 0 auto;
+}
+
+.wrap div:nth-of-type(1) {
+	margin-top: 30px;
+	width: 800px;
+	height: 100px;
+	border-bottom: 1px solid black;
+}
+
+.wrap div:nth-of-type(1) ul {
+	width: 798px;
+	height: 100px;
+}
+
+.wrap div:nth-of-type(2) {
+	width: 800px;
+	height: 300px;
+}
+
+.wrap div:nth-of-type(2) ul {
+	margin-top: 50px;
+	float: left;
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(1) {
+	width: 249px;
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(1) li {
+	width: 198px;
+	height: 600px;
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(2) {
+	width: 498px;
+	height: 600px;
+	margin-left: 50px;
+}
+
+input {
+	width: 250px;
+	height: 25px;
+	font-size: 23px;
+}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<div>
+			<ul>
+				<h1>电子商务平台（V2.0）— 注册页面</h1>
+			</ul>
+		</div>
+		<div>
+			<div
+				style="position: absolute; top: 15%; left: 40%; border: none; background-image: src('resources/images/register_bgi.jpeg')">
+
+
+				<form action="saveUser" method="post" style="font-size: 22px">
+					用&nbsp;户&nbsp;&nbsp;名:<input type="text" 
+						name="userName"><br>
+					<br> 密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:<input type="text"><br>
+					<br> 密码确认:<input type="text" id="userPwd" name="userPwd"><br>
+					<br> 真实姓名:<input type="text" id="name" name="name"><br>
+					<br>
+					性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+						type="radio" name="gender" value="男"
+						style="width: 15px; height: 15px">男
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="gender"
+						value="女" style="width: 15px; height: 15px">女<br>
+					<br> 身份证号:<input type="text" name=idCard><br>
+					<br> 年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:<input type="text"
+						name="age"><br>
+					<br> 通讯地址:<input type="text" name="address"><br>
+					<br> 联系电话:<input type="text" name="telon"><br>
+					
+					<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+						type="submit" value="确认"><br>
+					<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+						type="reset" value="重置"><br>
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="http://localhost:8080/java-web-e_business_platform/views/saveUser2">转至登录</a>
+				</form>
+
+				<form action="saveUser99" method="post" style="font-size: 22px">
+					用&nbsp;户&nbsp;&nbsp;名:<input type="text" id="userName"
+						name="userName" onblur="wego()"><br>
+						<table id="t1"></table><br>
+					<br> 密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:<input type="text"><br>
+					<br> 密码确认:<input type="text" id="userPwd" name="userPwd"><br>
+					<br> 真实姓名:<input type="text" id="name" name="name"><br>
+					<br>
+					性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+						type="radio" class="gender" name="gender" value="男"
+						style="width: 15px; height: 15px">男
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" class="gender"
+						name="gender" value="女" style="width: 15px; height: 15px">女<br>
+					<br> 身份证号:<input type="text" id="idCard" name="idCard"><br>
+					<br> 年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:<input type="text"
+						id="age" name="age"><br>
+					<br> 通讯地址:<input type="text" id="address" name="address"><br>
+					<br> 联系电话:<input type="text" id="telon" name="telon" onblur="wego()"><br>
+					<br>
+					<table id="t6"></table>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+						type="submit" value="确认"><br>
+					<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+						type="reset" value="重置"><br>
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="http://localhost:8080/java-web-e_business_platform/views/saveUser2">转至登录</a>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

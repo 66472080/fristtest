@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.lo.dao.AdminMngUserDao">
+	<resultMap type="com.lo.entity.User" id="UserResult">
+ 		<id column="uid" jdbcType="INTEGER" property="uid"/>
+ 		<result column="age" jdbcType="INTEGER" property="age"/>
+ 		<result column="username" jdbcType="VARCHAR" property="userName"/>
+ 		<result column="password" jdbcType="VARCHAR" property="userPwd"/>
+ 		<result column="name" jdbcType="VARCHAR" property="name"/>
+ 		<result column="gender" jdbcType="VARCHAR" property="gender"/>
+ 		<result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+ 		<result column="address" jdbcType="VARCHAR" property="address"/>
+ 		<result column="telon" jdbcType="VARCHAR" property="telon"/>
+ 		<result column="regTime" jdbcType="TIMESTAMP" property="regTime"/>
+ 		<result column="balance" jdbcType="DOUBLE" property="balance"/>
+ 		<result column="status" jdbcType="INTEGER" property="status"/>
+	</resultMap>
+	
+	<select id="findUsers" parameterType="com.lo.entity.User" resultMap="UserResult">
+		select * from user
+	</select>
+
+<select id="findUserCount" resultType = "int">
+	select count(uid) from user
+</select>
+
+
+<select id = "findUsers_limit" parameterType="java.util.Map" resultMap="UserResult">
+	select * from user where 1 = 1	
+	limit #{adminPage.dbIndex},#{adminPage.dbNumber}
+</select>
+
+<select id = "findUsersForTime_limit" parameterType="java.util.Map" resultMap="UserResult">
+	select * from user where regTime BETWEEN #{adminForTimeCheck.start_time} AND #{adminForTimeCheck.end_time}
+	limit #{adminPage.dbIndex},#{adminPage.dbNumber}
+</select>
+
+
+	
+	<select id="findUsersForField_limit" parameterType="java.util.Map" resultMap="UserResult">
+		select * from user where 1 = 1
+			<if test="adminCkeckUserForField.name != '%%'">
+				and name like #{adminCkeckUserForField.name}
+			</if>
+			 <if test="adminCkeckUserForField.userName != '%%'">
+				and username like #{adminCkeckUserForField.userName}
+			</if>
+			<if test="adminCkeckUserForField.idCard != '%%'">
+				and idCard like #{adminCkeckUserForField.idCard}
+			</if>
+			<if test="adminCkeckUserForField.telon != '%%'">
+				and telon like #{adminCkeckUserForField.telon}
+			</if>  
+			limit #{adminPage.dbIndex},#{adminPage.dbNumber}
+	</select>
+	
+	<select id="findUserCountForField"  parameterType="com.lo.model.AdminCkeckUserForField" resultType="int">
+		select count(uid) from user where 1 = 1
+			<if test="name != '%%'">
+				and name like #{name}
+			</if>
+			 <if test="userName != '%%'">
+				and username like #{userName}
+			</if>
+			<if test="idCard != '%%'">
+				and idCard like #{idCard}
+			</if>
+			<if test="telon != '%%'">
+				and telon like #{telon}
+			</if>  
+	</select>
+	
+	
+	<select id="findUserCountForTime" parameterType="com.lo.entity.AdminForTimeCheck" resultType = "int">
+		select count(uid) from user where regTime BETWEEN #{start_time} AND #{end_time}
+	</select>
+	
+	
+	<update id="stopUserTo0" parameterType="int">
+		update user set status = 0 where uid = #{uid}
+	</update>
+	
+	<update id="openUserTo1" parameterType="int">
+		update user set status = 1 where uid = #{uid}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.lo.dao.AdminDao">
+	<resultMap type="com.lo.entity.AdminTicket" id="AdminTicketResourceMap">
+		<result column = "tid" jdbcType="INTEGER" property="tid"/>
+		<result column = "dese" jdbcType="VARCHAR" property="dese" />
+		<result column = "startTime" jdbcType = "TIMESTAMP" property = "startTime"/>
+		<result column = "amount" jdbcType="INTEGER" property="amount"/>
+		<result column = "balance" jdbcType="INTEGER" property="balance"/>
+		<result column = "price" jdbcType="DOUBLE" property="price"/>
+		<result column = "status" jdbcType="INTEGER" property="status"/>
+	</resultMap>
+
+<select id="findTicketCount" resultType = "int">
+	select count(tid) from ticket
+</select>
+
+
+<select id="findTickets_limit" parameterType="java.util.Map" resultMap = "AdminTicketResourceMap">
+	select * from ticket limit #{adminPage.dbIndex},#{adminPage.dbNumber}
+</select>
+
+<select id="findTickets" parameterType="com.lo.entity.AdminTicket" resultMap="AdminTicketResourceMap">
+	select * from ticket where 1 = 1
+	<if test="tid != null">
+		and tid = #{tid}
+	</if>
+</select>
+
+<insert id="adminAddTicket" parameterType="com.lo.entity.AdminTicket">
+	insert into ticket (dese,startTime,amount,balance,price,status) 
+		values ( #{dese},#{startTime},#{amount},#{balance},#{price},#{status})
+</insert>
+
+<select id="findTicketCountForTime" resultType="int">
+	select count(tid) from ticket where startTime BETWEEN #{start_time} and #{end_time}
+</select>
+
+<select id="findTicketForTime_limit"  parameterType="java.util.Map" resultMap="AdminTicketResourceMap">
+	select * from ticket 
+		where startTime BETWEEN #{adminSeeTicketTime.start_time} and #{adminSeeTicketTime.end_time}
+		limit #{page.dbIndex},#{page.dbNumber}
+</select>
+
+<update id="updateStatusToO" parameterType="int">
+	update ticket set status = 0 where tid = #{tid}
+</update>
+
+<update id="updateStatusTo1" parameterType="int">
+	update ticket set status = 1 where tid = #{tid}
+</update>
+
+<update id="updateTickets" parameterType="com.lo.entity.AdminTicket">
+	update ticket set dese = #{dese},
+		startTime=#{startTime},
+		amount=#{amount},
+		balance=#{balance},
+		price=#{price},
+		status=#{status}
+		where tid = #{tid}
+</update>
+
+</mapper>
+
+
+
+
+
+
+

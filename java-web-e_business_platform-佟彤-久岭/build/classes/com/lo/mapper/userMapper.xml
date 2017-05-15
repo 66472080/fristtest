@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.lo.dao.UserDao">
+ 	<resultMap type="com.lo.entity.User" id="UserResult">
+ 		<id column="uid" jdbcType="INTEGER" property="uid"/>
+ 		<result column="age" jdbcType="INTEGER" property="age"/>
+ 		<result column="username" jdbcType="VARCHAR" property="userName"/>
+ 		<result column="password" jdbcType="VARCHAR" property="userPwd"/>
+ 		<result column="name" jdbcType="VARCHAR" property="name"/>
+ 		<result column="gender" jdbcType="VARCHAR" property="gender"/>
+ 		<result column="idCard" jdbcType="VARCHAR" property="idCard"/>
+ 		<result column="address" jdbcType="VARCHAR" property="address"/>
+ 		<result column="telon" jdbcType="VARCHAR" property="telon"/>
+ 		<result column="regTime" jdbcType="TIMESTAMP" property="regTime"/>
+ 		<result column="balance" jdbcType="DOUBLE" property="balance"/>
+ 		<result column="status" jdbcType="INTEGER" property="status"/>
+ 	</resultMap>
+ 	<select id="findUser" parameterType="com.lo.entity.User" resultMap="UserResult">
+ 		select * from user
+ 	</select>
+ 	<select id="findUser2" parameterType="com.lo.entity.User" resultMap="UserResult">
+ 		select * from user where uid=#{uid}
+ 	</select>
+ 	<insert id="saveUser" parameterType="com.lo.entity.User" useGeneratedKeys="false">
+ 		insert into user(age,username,password,name,gender,idCard,address,telon,regTime) values
+ 		(#{age},#{userName},#{userPwd},#{name},#{gender},#{idCard},#{address},#{telon},#{regTime})
+ 	</insert>
+ 	<update id="updateUser" parameterType="com.lo.entity.User">
+ 		update user set age=#{age},password=#{userPwd},name=#{name},gender=#{gender},idCard=#{idCard},address=#{address},telon=#{telon} WHERE uid=#{uid};
+ 	</update>
+ 	<update id="updateUser2" parameterType="com.lo.entity.User">
+ 		update user set balance=#{balance} WHERE uid=#{uid};
+ 	</update>
+ 	<update id="updateUser3" parameterType="com.lo.entity.User">
+ 		update user set balance=#{balance} WHERE uid=#{uid};
+ 	</update>
+ </mapper>
+ 

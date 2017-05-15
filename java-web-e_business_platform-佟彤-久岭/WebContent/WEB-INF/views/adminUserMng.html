@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script src="../resources/js/adminUserMng.js"></script>
+
+    <style>
+        *{margin: 0;padding: 0;list-style: none;}
+        .wrap div {margin: 0 auto;}
+        .wrap div:nth-of-type(1){
+            margin-top: 30px;
+            width:950px;
+            height: 100px;
+            /* border-bottom: 1px solid black; */
+        }
+        .wrap div:nth-of-type(1) ul {width: 850px;height: 200px;}
+        .wrap div:nth-of-type(2) {width:1200px;
+            height: 300px;}
+        .wrap div:nth-of-type(2) ul {margin-top: 50px;float: left;}
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) {
+            width: 150px;/* border-right: 1px solid black; */
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(1) li {
+            width: 150px;height: 600px;
+        }
+        .wrap div:nth-of-type(2) ul:nth-of-type(2) {
+            width: 900px;height: 700px;margin-left: 50px;
+        }
+        td{
+        		
+        text-align:center ;border:1px solid black;
+        }
+    </style>
+</head>
+<body style = "background-image: url('../resources/images/img2.png');background-position:40% 20%;background-repeat: no-repeat;">
+    <div class="wrap">
+        <div>
+            <ul><h1>汽车销售平台管理系统</h1></ul>
+        </div>
+        <div>
+            <ul>
+                <li><h2>
+                <a href = "adminIndex.html">首&nbsp;&nbsp;页</a><br><br><br>
+                <a href = "adminTicketMng.html">车辆管理</a><br><br><br>
+                <a href = "adminUserMng.html">用户管理</a><br><br><br>
+                <a href = "adminOrderMng.html">订单管理</a><br><br><br>
+                <a href = "../adminExit">退&nbsp;&nbsp;出</a><br><br><br>
+                </li></h2>
+            </ul>
+            <ul><li>
+            	
+         <span style = "color:gray">===========输入需要查询的时间段============</span><br>
+            <form>
+            		输入日期:<input type="date" id="checkUser_start_Time" />至
+            		<input type="date" id="checkUser_end_Time" />
+            		
+            			   <input type = "button" value = "查询" onclick = "checkUserForTime();"/>
+            	</form><br>
+            	<span style = "color:gray">===========模糊查询时应尽量保证单条信息的准确性============</span><br>
+            	<form>
+            		姓名:<input type="text" id="checkUser_name" style = "width:90px"/>
+            		用户名:<input type="text" id="checkUser_userName" style = "width:90px"/>
+            		身份证号:<input type="text" id="checkUser_idCard"/>
+            		联系电话:<input type="text" id="checkUser_telon"  style = "width:90px"/>
+            			   <input type = "button" value = "查询" onclick = "checkseeUserForField()"/>
+            	</form><br>  <br><br><br>   	
+            	<table id = "table_user" style="text-align:center ;border:1px solid black; border-collapse:collapse"></table>
+           <div id = "page" style = "margin-left: 30% ; border:none;"></div>
+            </li>
+            </ul>
+        </div>
+    </div>
+
+	
+
+
+
+	
+	
+	
+</body>
+</html>

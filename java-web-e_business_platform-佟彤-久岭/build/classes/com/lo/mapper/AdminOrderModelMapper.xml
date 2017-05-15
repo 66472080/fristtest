@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lo.dao.AdminOrderModelDao">
+	<resultMap type="com.lo.entity.AdminOrderModel" id="OrderModelResourceMap">
+		<result column="oid" jdbcType="INTEGER" property="order_id" />
+		<result column="dese" jdbcType="VARCHAR" property="order_dese" />
+		<result column="commitTime" jdbcType="VARCHAR" property="order_time" />
+		<result column="amount" jdbcType="VARCHAR" property="order_money" />
+		<result column="name" jdbcType="VARCHAR" property="order_user_name" />
+		<result column="username" jdbcType="VARCHAR" property="order_userName" />
+		<result column="idCard" jdbcType="VARCHAR" property="order_userIdCard" />
+		<result column="xuhao" jdbcType="VARCHAR" property="xuhao" />
+
+
+	</resultMap>
+
+	<select id="findOrderCount" resultType="int">
+		select count(o.oid) from
+		Orders o
+		left join User u
+		on o.uid = u.uid
+
+	</select>
+
+	<select id="findOrders" resultMap="OrderModelResourceMap">
+		select o.oid as oid,
+		o.dese as
+		dese,
+		o.commitTime as commitTime ,
+		o.amount as amount,
+		u.name as name,
+		u.username as username,
+		u.idCard as idCard from Orders o
+		left join User
+		u
+		on o.uid = u.uid
+	</select>
+
+	<select id="findOrders_limit" parameterType="com.lo.entity.AdminPage"
+		resultMap="OrderModelResourceMap">
+		select o.oid as oid,
+		o.xuhao as xuhao,
+		o.dese as dese,
+		o.commitTime as
+		commitTime ,
+		o.amount as amount,
+		u.name as name,
+		u.username as username,
+		u.idCard as idCard from Orders o
+		left join User u
+		on o.uid = u.uid
+		limit
+		#{dbIndex} , #{dbNumber}
+	</select>
+
+	<select id="findOrderCountForTime" parameterType="com.lo.entity.AdminForTimeCheck"
+		resultType="int">
+		select count(o.oid) from Orders o
+		left join User u
+		on o.uid = u.uid
+		where
+		commitTime BETWEEN #{start_time} and #{end_time}
+	</select>
+
+	<select id="checkOrderForTime" parameterType="com.lo.entity.AdminOrderModel"
+		resultMap="OrderModelResourceMap">
+		select o.oid as oid,
+		o.xuhao as xuhao,
+		o.dese as dese,
+		o.commitTime as
+		commitTime ,
+		o.amount as amount,
+		u.name as name,
+		u.username as username,
+		u.idCard from Orders o
+		left join User u
+		on o.uid = u.uid where
+		commitTime BETWEEN #{start_time} and #{end_time}
+	</select>
+
+	<select id="findOrdersForTime_limit" parameterType="java.util.Map"
+		resultMap="OrderModelResourceMap">
+		select o.oid as oid,
+		o.xuhao as xuhao,
+		o.dese as dese,
+		o.commitTime as
+		commitTime ,
+		o.amount as amount,
+		u.name as name,
+		u.username as username,
+		u.idCard from Orders o
+		left join User u
+		on o.uid = u.uid
+		where
+		commitTime BETWEEN #{adminForTimeCheck.start_time} and
+		#{adminForTimeCheck.end_time}
+		limit #{adminPage.dbIndex} ,
+		#{adminPage.dbNumber}
+	</select>
+
+
+	<select id="findOrdersForField_limit" parameterType="java.util.Map"
+		resultMap="OrderModelResourceMap">
+		select o.oid as oid,
+		o.xuhao as xuhao,
+		o.dese as dese,
+		o.commitTime as commitTime ,
+		o.amount as amount,
+		u.name as name,
+		u.username as username,
+		u.idCard from
+		Orders o
+		left join User u
+		on o.uid = u.uid where 1 = 1
+		<if test="adminOrderModel.order_user_name != '%%'">
+			and name like #{adminOrderModel.order_user_name}
+		</if>
+		<if test="adminOrderModel.order_userName != '%%'">
+			and username like #{adminOrderModel.order_userName}
+		</if>
+		<if test="adminOrderModel.order_userIdCard != '%%'">
+			and idCard like #{adminOrderModel.order_userIdCard}
+		</if>
+		<if test="adminOrderModel.order_id != '%%'">
+			and xuhao like #{adminOrderModel.order_id}
+		</if>
+		limit #{adminPage.dbIndex} , #{adminPage.dbNumber}
+
+	</select>
+
+	<select id="checkseeOrderForField" parameterType="com.lo.entity.AdminOrderModel"
+		resultMap="OrderModelResourceMap">
+		select o.oid as oid,
+		o.xuhao as xuhao,
+		o.dese as dese,
+		o.commitTime as commitTime ,
+		o.amount as amount,
+		u.name as name,
+		u.username as username,
+		u.idCard from
+		Orders o
+		left join User u
+		on o.uid = u.uid where 1 = 1
+
+		<if test="order_user_name != '%%'">
+			and name like #{order_user_name}
+		</if>
+		<if test="order_userName != '%%'">
+			and username like #{order_userName}
+		</if>
+		<if test="order_userIdCard != '%%'">
+			and idCard like #{order_userIdCard}
+		</if>
+		<if test="order_id != '%%'">
+			and xuhao like #{order_id}
+		</if>
+
+
+	</select>
+
+
+
+	<select id="findOrdersCountForField_limit" parameterType="com.lo.entity.AdminOrderModel"
+		resultType="int">
+		select count(o.oid) from Orders o
+		left join User u
+		on o.uid = u.uid
+		where 1 = 1
+
+		<if test="order_user_name != '%%'">
+			and name like #{order_user_name}
+		</if>
+		<if test="order_userName != '%%'">
+			and username like #{order_userName}
+		</if>
+		<if test="order_userIdCard != '%%'">
+			and idCard like #{order_userIdCard}
+		</if>
+		<if test="order_id != '%%'">
+			and xuhao like #{order_id}
+		</if>
+	</select>
+</mapper>
+
+

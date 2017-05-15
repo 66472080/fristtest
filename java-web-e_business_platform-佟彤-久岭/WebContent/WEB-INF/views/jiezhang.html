@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+		$.ajax({
+			url:"../findSC2",
+			type:"post",
+			contentType:"application/json;charset=utf-8",
+			datatype:"json",
+			success:
+				function(result) {
+				if(result != ""){
+					var table="<tr><td>序号</td>&nbsp;&nbsp;<td>车辆型号</td>&nbsp;&nbsp;<td>单价(元)</td>&nbsp;&nbsp;<td>购车数量</td>&nbsp;&nbsp;<td>总金额(元)</td></tr>";
+					
+				var a = 0;
+				var b = 0;
+			
+					for(var i =1;i<=result.length;i++){
+					a += result[i-1].buyticket;
+					b += result[i-1].menoy;
+					table += "<tr><td class='td'>"+result[i-1].sid+"</td>"+
+					"<td>"+result[i-1].dese+"</td>"+
+					"<td>"+result[i-1].price+"</td>"+
+					"<td>"+result[i-1].buyticket+"</td>"+
+					"<td>"+result[i-1].menoy+"</td></tr>"
+					}
+					table += "<tr><td class='td2'>总计</td>"+
+					"<td ></td>"+
+					"<td ></td>"+
+					"<td >"+a+"</td>"+
+					"<td >"+b+"</td></tr>"
+					
+					$("#t1").html(table);
+					alert("购车成功");
+				}
+				else{
+					alert("操作异常 请检查账户余额或当前剩余票数");
+					window.location.href = "../lookSC";
+			}
+			}
+		});
+	})
+</script>
+<style>
+td {
+	text-align: center;
+	border: 1px solid black;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wrap div {
+	margin: 0 auto;
+}
+
+.wrap div:nth-of-type(1) {
+	margin-top: 30px;
+	width: 800px;
+	height: 100px;
+	/* border-bottom: 1px solid black; */
+}
+
+.wrap div:nth-of-type(1) ul {
+	width: 798px;
+	height: 100px;
+}
+
+.wrap div:nth-of-type(2) {
+	width: 800px;
+	height: 300px;
+}
+
+.wrap div:nth-of-type(2) ul {
+	margin-top: 50px;
+	float: left;
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(1) {
+	width: 149px;
+	/* border-right: 1px solid black; */
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(1) li {
+	width: 98px;
+	height: 600px;
+}
+
+.wrap div:nth-of-type(2) ul:nth-of-type(2) {
+	width: 598px;
+	height: 600px;
+	margin-left: 50px;
+}
+
+tr {
+	height: 60px;
+}
+</style>
+</head>
+<body style = "background-image: url('../resources/images/img3.png');background-position:75% 20%;background-repeat: no-repeat;">
+<div class="wrap">
+        <div>
+            <ul><h1>汽车销售平台购车系统</h1></ul>
+        </div>
+        <div>
+            <ul>
+                <li><h2>
+                <a href="http://localhost:8080/java-web-e_business_platform/views/index.html">首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/rb.html">实时购车</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/bill.html">我的订单</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/userMessage.html">会员信息</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/chongzhi.html">账户充值</a><br>
+						<br>
+						<br> <a href="http://localhost:8080/java-web-e_business_platform/views/saveUser2">退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出</a><br>
+               </li></h2>
+            </ul>
+            
+            <ul>
+            <table id = "t2" style="text-align:center ;border:1px solid black; border-collapse:collapse"></table>
+            <table id = "t1" style="text-align:center ;border:1px solid black; border-collapse:collapse"></table>
+            
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
