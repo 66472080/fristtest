@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC     
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"    
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.lanou.entity.Item" table="Item">
+		<id name="id" type="int" column="qid">
+			<generator class="identity"></generator>
+		</id>
+		<property name="qusetion" type="string" column="question"></property>
+		<property name="option_a" type="string" column="potion_a"></property>
+		<property name="option_b" type="string" column="potion_b"></property>
+		<property name="option_c" type="string" column="potion_c"></property>
+		<property name="option_d" type="string" column="potion_d"></property>
+		<property name="answer" type="string" column="answer"></property>
+	</class>
+</hibernate-mapping>
