@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+function login() {
+	var user={};
+	user.id=$("#id").val();
+	$.ajax({
+		url:"../findUser",
+		type:"post",
+		data:JSON.stringify(user),
+		datatype:"json",
+		contentType:"application/json;charset=utf-8",
+		success:
+			function (result) {
+				alert("ok");
+				alert(result.userName);
+				alert(result.userPwd);
+			}
+	});
+}
+</script>
+</head>
+<body>
+	<form>
+	<input type="text" id="id">
+	<input type="button" onclick="login()">
+	</form>
+</body>
+</html>
